@@ -35,7 +35,7 @@ I am a passionate tech enthusiast, driven by a curiosity for technology and a lo
 ## 📬 Get in Touch
 
 - Connect with me on [Linkedin](https://www.linkedin.com/in/mukundmurali-mm/)
-- Read more of my articles on [theenthusiast.dev](https://medium.com/@mukundmurali)
+- Read more of my articles on [medium](https://medium.com/@mukundmurali)
 
 Thanks for stopping by! Let's connect and explore the fascinating world of technology together. 🚀
 
