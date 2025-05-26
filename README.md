@@ -12,7 +12,7 @@ I am a passionate tech enthusiast, driven by a curiosity for technology and a lo
 
 
 ## Tech Stack
-[![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=python,html,css,wasm)](https://skillicons.dev)
 
 ## 🌱 Currently Exploring
 
