@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mukund Murali — Technical PM · AI Product Builder</title>
+  <meta name="description" content="Technical Product Manager & AI Builder — Cloud Architect turned PM. OCI · Azure · GenAI · LLMOps" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & TOKENS ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07070d;
+      --surface:  #0f0f1a;
+      --card:     #141420;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #e8e8f0;
+      --muted:    #8888a8;
+      --accent1:  #7c3aed;
+      --accent2:  #3b82f6;
+      --accent3:  #06b6d4;
+      --gradient: linear-gradient(135deg, #7c3aed, #3b82f6, #06b6d4);
+      --glow:     0 0 60px rgba(124,58,237,0.15), 0 0 120px rgba(59,130,246,0.08);
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.05) inset;
+      --radius:   14px;
+      --radius-sm: 8px;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="light"] {
+      --bg:       #f8f8fc;
+      --surface:  #ffffff;
+      --card:     #ffffff;
+      --border:   rgba(0,0,0,0.08);
+      --text:     #1a1a2e;
+      --muted:    #6b6b88;
+      --glow:     0 0 60px rgba(124,58,237,0.06);
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1rem, 5vw, 3rem);
+      height: 64px;
+      background: rgba(7, 7, 13, 0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    [data-theme="light"] nav {
+      background: rgba(248,248,252,0.85);
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.03em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .theme-toggle {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      transition: all var(--transition);
+    }
+
+    .theme-toggle:hover { border-color: var(--accent1); }
+
+    .nav-cta {
+      padding: 0.45rem 1.1rem;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem clamp(1rem, 5vw, 3rem) 5rem;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+      top: -100px; left: -100px;
+    }
+
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(59,130,246,0.14) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      animation-delay: -3s;
+    }
+
+    .hero-orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(6,182,212,0.1) 0%, transparent 70%);
+      top: 40%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -6s;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.05); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border: 1px solid rgba(124,58,237,0.35);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: rgba(124,58,237,0.06);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-title strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.75rem;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 4px 20px rgba(124,58,237,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(124,58,237,0.45);
+    }
+
+    .btn-secondary {
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent1);
+      background: rgba(124,58,237,0.07);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.5s ease both;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SECTION BASICS ─── */
+    section {
+      position: relative;
+      padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent1);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin-bottom: 3rem;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .highlight-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .highlight-card {
+      padding: 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .highlight-card:hover {
+      border-color: rgba(124,58,237,0.3);
+      transform: translateY(-2px);
+    }
+
+    .highlight-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .highlight-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .highlight-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* ─── SKILLS ─── */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-group {
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      transition: border-color var(--transition);
+    }
+
+    .skill-group:hover { border-color: rgba(59,130,246,0.3); }
+
+    .skill-group-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      padding: 0.3rem 0.7rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+
+    .skill-tag:hover {
+      border-color: var(--accent1);
+      color: var(--text);
+      background: rgba(124,58,237,0.07);
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 500px) { .projects-grid { grid-template-columns: 1fr; } }
+
+    .project-card {
+      position: relative;
+      padding: 1.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all var(--transition);
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      border-color: rgba(124,58,237,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.15);
+    }
+
+    .project-card:hover::after { opacity: 0.03; }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .project-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.2);
+      flex-shrink: 0;
+    }
+
+    .project-link-icon {
+      color: var(--muted);
+      font-size: 1rem;
+      transition: color var(--transition);
+    }
+
+    .project-card:hover .project-link-icon { color: var(--accent1); }
+
+    .project-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.25rem;
+    }
+
+    .project-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .lang-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+    }
+
+    .lang-python { background: #3776ab; }
+    .lang-javascript { background: #f7df1e; }
+    .lang-typescript { background: #3178c6; }
+    .lang-html { background: #e34c26; }
+    .lang-other { background: #888; }
+
+    .project-award {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #f59e0b;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+    }
+
+    /* ─── BLOG ─── */
+    .blog-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .blog-tab {
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .blog-tab.active, .blog-tab:hover {
+      background: var(--gradient);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 500px) { .blog-grid { grid-template-columns: 1fr; } }
+
+    .blog-card {
+      position: relative;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: all var(--transition);
+    }
+
+    .blog-card:hover {
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-2px);
+    }
+
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .blog-source {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .source-hashnode {
+      background: rgba(46,110,190,0.15);
+      color: #2e6ebe;
+      border: 1px solid rgba(46,110,190,0.25);
+    }
+
+    .source-medium {
+      background: rgba(0,0,0,0.15);
+      color: #888;
+      border: 1px solid rgba(128,128,128,0.25);
+    }
+
+    [data-theme="light"] .source-medium {
+      background: rgba(0,0,0,0.06);
+      color: #555;
+    }
+
+    .blog-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .blog-title {
+      font-size: 0.97rem;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .blog-excerpt {
+      font-size: 0.825rem;
+      color: var(--muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .blog-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .blog-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* Blog hidden items */
+    .blog-card.hidden { display: none; }
+
+    /* ─── EXPERIENCE ─── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.45rem;
+      top: 5px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gradient);
+      box-shadow: 0 0 12px rgba(124,58,237,0.4);
+    }
+
+    .timeline-period {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent2);
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-role {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline-company {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-company strong {
+      color: var(--text);
+    }
+
+    .timeline-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .timeline-points li {
+      font-size: 0.875rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .timeline-points li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--accent1);
+    }
+
+    .timeline-points li strong { color: var(--text); }
+
+    /* ─── CERTS ─── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .cert-card {
+      padding: 1.1rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all var(--transition);
+    }
+
+    .cert-card:hover {
+      border-color: rgba(6,182,212,0.35);
+      transform: translateX(3px);
+    }
+
+    .cert-icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+
+    .cert-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .cert-org {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact-wrapper {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--glow), var(--card-shadow);
+      padding: clamp(2rem, 5vw, 3.5rem);
+      text-align: center;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent1);
+      background: rgba(124,58,237,0.06);
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 2rem clamp(1rem, 5vw, 3rem);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── MOBILE NAV TOGGLE (optional simple hamburger) ─── */
+    @media (max-width: 480px) {
+      .hero-stats { gap: 1.5rem; }
+      .highlight-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ─── SCROLL TO TOP ─── */
+    #scrollTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      z-index: 50;
+    }
+
+    #scrollTop.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #scrollTop:hover { transform: translateY(-2px); }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav>
+  <a class="nav-logo" href="#">MM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
+    <a class="nav-cta" href="mailto:mukund2345@gmail.com">Hire me</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Open to AI PM &amp; Product roles
+  </div>
+
+  <h1 class="hero-name">Mukund Murali</h1>
+  <p class="hero-title">
+    <strong>Technical Product Manager</strong> · Cloud Architect · AI Builder
+  </p>
+  <p class="hero-desc">
+    10+ years building at the intersection of cloud infrastructure, Generative AI, and product thinking.
+    I turn complex systems into elegant products — from OCI to LLMOps.
+  </p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#blog" class="btn-secondary">Read Blog</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Certifications</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">14+</div>
+      <div class="stat-label">Blog Posts</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">9+</div>
+      <div class="stat-label">GitHub Projects</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="divider"></div>
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">Cloud Architect → AI Product Builder</h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Principal Cloud Architect at Oracle</strong> transitioning into AI Product Management.
+        With a decade of experience across Oracle and Microsoft, I've built cloud-native architectures,
+        shipped GenAI tools used by Fortune 500 clients, and won Oracle's Innovation Month Award for
+        building a <strong>Diagrams-to-Deployment AI tool</strong>.
+      </p>
+      <p>
+        I specialize in <strong>LLMOps, RAG architectures, and Agentic AI workflows</strong> —
+        and I write about it on Hashnode &amp; Medium to share what I learn.
+      </p>
+      <p>
+        My north star: build AI products that feel like magic but are grounded in engineering rigor.
+        I'm actively pursuing <strong>AI Product Management</strong> roles where I can bridge
+        technical depth with product strategy.
+      </p>
+      <div style="display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap;">
+        <a href="https://linkedin.com/in/mukundmurali-mm" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:0.5rem 1rem;">LinkedIn</a>
+        <a href="https://github.com/mukundmurali-mm" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:0.5rem 1rem;">GitHub</a>
+        <a href="https://mukundmurali.in/" target="_blank" class="btn-secondary" style="font-size:0.8rem;padding:0.5rem 1rem;">Website</a>
+      </div>
+    </div>
+    <div class="highlight-cards">
+      <div class="highlight-card">
+        <div class="highlight-icon">🏆</div>
+        <div class="highlight-label">Award</div>
+        <div class="highlight-value">Oracle Innovation Month</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🏢</div>
+        <div class="highlight-label">Currently at</div>
+        <div class="highlight-value">Oracle (Principal Architect)</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📍</div>
+        <div class="highlight-label">Location</div>
+        <div class="highlight-value">Bengaluru, India</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🎯</div>
+        <div class="highlight-label">Goal</div>
+        <div class="highlight-value">AI Product Manager</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🎓</div>
+        <div class="highlight-label">Education</div>
+        <div class="highlight-value">B.E. CS, Anna University</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">✉️</div>
+        <div class="highlight-label">Email</div>
+        <div class="highlight-value">mukund2345@gmail.com</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<div class="divider"></div>
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">Technical Toolkit</h2>
+  <p class="section-subtitle">A decade of building — cloud, AI, infra, and product.</p>
+  <div class="skills-container reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">AI &amp; LLM</div>
+      <div class="skill-tags">
+        <span class="skill-tag">LLMOps</span>
+        <span class="skill-tag">RAG</span>
+        <span class="skill-tag">Prompt Engineering</span>
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">LlamaIndex</span>
+        <span class="skill-tag">Semantic Kernel</span>
+        <span class="skill-tag">Claude API</span>
+        <span class="skill-tag">GPT-4o</span>
+        <span class="skill-tag">Llama 3.2</span>
+        <span class="skill-tag">Gemini</span>
+        <span class="skill-tag">MCP</span>
+        <span class="skill-tag">Agentic AI</span>
+        <span class="skill-tag">Vector DBs</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Cloud Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag">OCI</span>
+        <span class="skill-tag">Azure</span>
+        <span class="skill-tag">OCI Gen AI</span>
+        <span class="skill-tag">Azure OpenAI</span>
+        <span class="skill-tag">OCI AI Agents</span>
+        <span class="skill-tag">OCI Functions</span>
+        <span class="skill-tag">OCI Data Science</span>
+        <span class="skill-tag">FSDR</span>
+        <span class="skill-tag">Cloud Guard</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Infrastructure &amp; DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Terraform</span>
+        <span class="skill-tag">ARM Templates</span>
+        <span class="skill-tag">GitHub Actions</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">PowerShell</span>
+        <span class="skill-tag">Streamlit</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Product &amp; Strategy</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Product Thinking</span>
+        <span class="skill-tag">PRD Writing</span>
+        <span class="skill-tag">Stakeholder Mgmt</span>
+        <span class="skill-tag">Roadmapping</span>
+        <span class="skill-tag">User Research</span>
+        <span class="skill-tag">Agile</span>
+        <span class="skill-tag">Technical Writing</span>
+        <span class="skill-tag">Mentorship</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Security &amp; Networking</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Azure Sentinel</span>
+        <span class="skill-tag">OWASP/WAF</span>
+        <span class="skill-tag">Palo Alto</span>
+        <span class="skill-tag">Cisco ASA</span>
+        <span class="skill-tag">BGP / OSPF</span>
+        <span class="skill-tag">VPN / MPLS</span>
+        <span class="skill-tag">Infoblox</span>
+        <span class="skill-tag">DevSecOps</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools &amp; Workflows</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Obsidian</span>
+        <span class="skill-tag">Notion</span>
+        <span class="skill-tag">Steampipe</span>
+        <span class="skill-tag">Splunk</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">Ollama</span>
+        <span class="skill-tag">Hashnode</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<div class="divider"></div>
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">Tools &amp; Apps</h2>
+  <p class="section-subtitle">AI-powered tools, cloud automation, and side projects — all open source on GitHub.</p>
+
+  <div class="projects-grid reveal">
+
+    <!-- D2D — Award Winner -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/D2D" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🏗️</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Diagrams to Deployment (D2D)</div>
+      <div class="project-desc">
+        AI-powered tool that reads network architecture diagrams using OCI Gen AI Vision models
+        and auto-generates deployment-ready Terraform code. Won Oracle's Innovation Month Award.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+        <span class="project-award">🏆 Innovation Award</span>
+      </div>
+    </a>
+
+    <!-- nibblify -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/nibblify" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🎬</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Nibblify</div>
+      <div class="project-desc">
+        Turns long YouTube videos into bite-sized daily episodes — powered by Claude AI.
+        Perfect for busy learners who want to consume content asynchronously.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-javascript"></span>JavaScript</span>
+      </div>
+    </a>
+
+    <!-- OCI GenAI Chatbot -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/OciGenAiChatbot" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🤖</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">OCI GenAI Chatbot</div>
+      <div class="project-desc">
+        Enterprise chatbot built on OCI Generative AI services using RAG and vector embeddings.
+        Helps teams search internal cloud documentation and get conversational Q&A.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+    <!-- command-center -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/command-center" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🧠</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Command Center</div>
+      <div class="project-desc">
+        A locally-run personal wiki viewer for your Obsidian vault with AI-powered topic
+        organization. Your second brain, turbocharged.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-javascript"></span>JavaScript</span>
+      </div>
+    </a>
+
+    <!-- llama-ocr-oci -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/llama-ocr-oci" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🔍</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Llama OCR on OCI</div>
+      <div class="project-desc">
+        Uses Llama OCR with OCI Gen AI services to extract structured text from images and documents.
+        No-code Streamlit UI for non-technical users.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+    <!-- streamlit-FSDR -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/streamlit-FSDR-Plans" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">📋</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">FSDR Plans Manager</div>
+      <div class="project-desc">
+        Streamlit app to visually manage OCI Full Stack Disaster Recovery plan steps — simplifies
+        complex FSDR workflows with a clean spreadsheet-like interface.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+    <!-- FSDR-AI-Agent -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/FSDR-AI-Agent" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">⚡</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">FSDR AI Agent</div>
+      <div class="project-desc">
+        An AI agent that automates OCI Full Stack Disaster Recovery workflows, reducing
+        manual effort in disaster recovery planning and execution.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+    <!-- Cloud Guard Splunk -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/Cloud_Guard_Splunk" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">🛡️</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">Cloud Guard → Splunk</div>
+      <div class="project-desc">
+        OCI Functions integration that exports OCI Cloud Guard security problems to Splunk via HEC.
+        Enables unified security monitoring across cloud and SIEM platforms.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+    <!-- cd3-streamlit -->
+    <a class="project-card" href="https://github.com/mukundmurali-mm/cd3-streamlit" target="_blank" rel="noopener">
+      <div class="project-header">
+        <div class="project-icon">☁️</div>
+        <span class="project-link-icon">↗</span>
+      </div>
+      <div class="project-name">CD3 Streamlit</div>
+      <div class="project-desc">
+        Streamlit-based frontend for CD3 (Cloud Deployment Documentation &amp; Deployment) —
+        a toolkit for OCI infrastructure automation via Excel-driven Terraform generation.
+      </div>
+      <div class="project-footer">
+        <span class="project-lang"><span class="lang-dot lang-python"></span>Python</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ BLOG ═══ -->
+<div class="divider"></div>
+<section id="blog">
+  <div class="section-label">Blog</div>
+  <h2 class="section-title">Writing &amp; Insights</h2>
+  <p class="section-subtitle">AI, cloud, productivity, and the future of engineering — on Hashnode &amp; Medium.</p>
+
+  <div class="blog-tabs">
+    <button class="blog-tab active" data-filter="all">All Posts</button>
+    <button class="blog-tab" data-filter="hashnode">Hashnode</button>
+    <button class="blog-tab" data-filter="medium">Medium</button>
+  </div>
+
+  <div class="blog-grid reveal" id="blogGrid">
+
+    <!-- ─ Hashnode ─ -->
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/interfacing-ai-mcp-vs-cli" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">May 2026</span>
+      </div>
+      <div class="blog-title">Interfacing AI: Deciding Between MCP and CLI in Agentic Workflows</div>
+      <div class="blog-excerpt">A practical breakdown of when to use MCP servers vs CLI tools for building AI agents — with real trade-offs from production experience.</div>
+      <div class="blog-tags"><span class="blog-tag">MCP</span><span class="blog-tag">CLI</span><span class="blog-tag">Agentic AI</span><span class="blog-tag">LLM</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/building-a-second-brain-with-claude-obsidian" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Apr 2026</span>
+      </div>
+      <div class="blog-title">Building a Second Brain with Claude + Obsidian: The Ultimate Guide to Compounding Knowledge</div>
+      <div class="blog-excerpt">How I combined Claude AI with Obsidian to create a personal knowledge management system that compounds over time.</div>
+      <div class="blog-tags"><span class="blog-tag">AI</span><span class="blog-tag">Obsidian</span><span class="blog-tag">Productivity</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/how-to-build-a-private-agentic-workflow-with-claude-code-and-ollama" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Apr 2026</span>
+      </div>
+      <div class="blog-title">How to Build a Private, Agentic Workflow with Claude Code and Ollama</div>
+      <div class="blog-excerpt">Step-by-step guide to running fully private agentic AI workflows locally using Claude Code and Ollama — no data leaves your machine.</div>
+      <div class="blog-tags"><span class="blog-tag">Claude Code</span><span class="blog-tag">Ollama</span><span class="blog-tag">Agentic AI</span><span class="blog-tag">DevOps</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/build-a-no-code-ocr-app-using-oci-generative-ai-and-streamlit" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">May 2025</span>
+      </div>
+      <div class="blog-title">Build a No-Code OCR App Using OCI Generative AI and Streamlit</div>
+      <div class="blog-excerpt">Build a powerful OCR application in minutes using Llama and OCI Gen AI — accessible to anyone with a browser.</div>
+      <div class="blog-tags"><span class="blog-tag">OCI</span><span class="blog-tag">Llama</span><span class="blog-tag">Streamlit</span><span class="blog-tag">AI</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/unlocking-ai-potential-the-model-context-protocol-mcp-revolution" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Mar 2025</span>
+      </div>
+      <div class="blog-title">Unlocking AI Potential: The Model Context Protocol (MCP) Revolution</div>
+      <div class="blog-excerpt">A deep dive into MCP — what it is, why it matters, and how it's changing the way AI systems communicate with tools and data.</div>
+      <div class="blog-tags"><span class="blog-tag">MCP</span><span class="blog-tag">AI</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/how-to-create-a-smart-research-assistant-using-oci-ai-agents" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Mar 2025</span>
+      </div>
+      <div class="blog-title">How to Create a Smart Research Assistant Using OCI AI Agents</div>
+      <div class="blog-excerpt">Build an intelligent research assistant on OCI's AI Agents framework — RAG-powered, production-ready, and surprisingly simple to deploy.</div>
+      <div class="blog-tags"><span class="blog-tag">OCI</span><span class="blog-tag">AI Agents</span><span class="blog-tag">Research</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/googles-notebooklm-a-second-brain-for-the-ai-age" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Nov 2024</span>
+      </div>
+      <div class="blog-title">Google's NotebookLM: A Second Brain for the AI Age</div>
+      <div class="blog-excerpt">An in-depth look at NotebookLM — Google's AI-powered research tool — and how it fits into modern knowledge management workflows.</div>
+      <div class="blog-tags"><span class="blog-tag">AI</span><span class="blog-tag">NotebookLM</span><span class="blog-tag">Productivity</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/exploring-your-cloud-with-steampipe-and-powerpipe-an-overview-with-oci-focus" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Nov 2024</span>
+      </div>
+      <div class="blog-title">Exploring Your Cloud with Steampipe and Powerpipe</div>
+      <div class="blog-excerpt">Query your OCI cloud resources with SQL using Steampipe and visualize them with Powerpipe — a powerful combo for cloud visibility.</div>
+      <div class="blog-tags"><span class="blog-tag">OCI</span><span class="blog-tag">Steampipe</span><span class="blog-tag">Cloud</span></div>
+    </a>
+
+    <a class="blog-card" href="https://mukundmurali.hashnode.dev/prompt-engineering-101-getting-started" target="_blank" data-source="hashnode">
+      <div class="blog-card-meta">
+        <span class="blog-source source-hashnode">Hashnode</span>
+        <span class="blog-date">Jan 2024</span>
+      </div>
+      <div class="blog-title">Prompt Engineering 101 — Getting Started</div>
+      <div class="blog-excerpt">A practical primer on prompt engineering for LLMs — techniques, patterns, and best practices for getting great results from ChatGPT, Claude, and Gemini.</div>
+      <div class="blog-tags"><span class="blog-tag">LLM</span><span class="blog-tag">Prompt Engineering</span><span class="blog-tag">ChatGPT</span></div>
+    </a>
+
+    <!-- ─ Medium ─ -->
+    <a class="blog-card" href="https://medium.com/@mukundmurali/top-5-mac-apps-that-supercharge-my-productivity-in-2025-f41cb2c441cd" target="_blank" data-source="medium">
+      <div class="blog-card-meta">
+        <span class="blog-source source-medium">Medium</span>
+        <span class="blog-date">May 2025</span>
+      </div>
+      <div class="blog-title">Top 5 Mac Apps That Supercharge My Productivity in 2025</div>
+      <div class="blog-excerpt">The exact tools I use every day to stay in flow — from task management to AI-assisted writing and focus systems.</div>
+      <div class="blog-tags"><span class="blog-tag">Productivity</span><span class="blog-tag">Mac</span><span class="blog-tag">Tools</span></div>
+    </a>
+
+    <a class="blog-card" href="https://medium.com/@mukundmurali/forever-notes-your-simple-and-effective-pkm-in-apple-notes-b5efa5ffd390" target="_blank" data-source="medium">
+      <div class="blog-card-meta">
+        <span class="blog-source source-medium">Medium</span>
+        <span class="blog-date">Apr 2025</span>
+      </div>
+      <div class="blog-title">Forever Notes: Your Simple &amp; Effective PKM in Apple Notes</div>
+      <div class="blog-excerpt">A simple, friction-free personal knowledge management system built entirely inside Apple Notes — no plugins, no subscriptions.</div>
+      <div class="blog-tags"><span class="blog-tag">PKM</span><span class="blog-tag">Apple Notes</span><span class="blog-tag">Productivity</span></div>
+    </a>
+
+    <a class="blog-card" href="https://medium.com/@mukundmurali/run-llama-3-2-vision-model-in-oci-data-science-notebook-67c03e821cb2" target="_blank" data-source="medium">
+      <div class="blog-card-meta">
+        <span class="blog-source source-medium">Medium</span>
+        <span class="blog-date">Sep 2024</span>
+      </div>
+      <div class="blog-title">Run Llama 3.2 Vision Model in OCI Data Science Notebook</div>
+      <div class="blog-excerpt">Step-by-step guide to running Meta's Llama 3.2 vision model inside an OCI Data Science Notebook environment.</div>
+      <div class="blog-tags"><span class="blog-tag">Llama</span><span class="blog-tag">OCI</span><span class="blog-tag">Vision AI</span></div>
+    </a>
+
+    <a class="blog-card" href="https://medium.com/@mukundmurali/managing-oci-fsdr-plan-steps-with-excel-spreadsheet-ecbe4c8b2e17" target="_blank" data-source="medium">
+      <div class="blog-card-meta">
+        <span class="blog-source source-medium">Medium</span>
+        <span class="blog-date">Aug 2024</span>
+      </div>
+      <div class="blog-title">Managing OCI FSDR Plan Steps with Excel Spreadsheet</div>
+      <div class="blog-excerpt">A practical approach to managing OCI Full Stack Disaster Recovery plan steps using a familiar Excel interface.</div>
+      <div class="blog-tags"><span class="blog-tag">OCI</span><span class="blog-tag">FSDR</span><span class="blog-tag">Disaster Recovery</span></div>
+    </a>
+
+    <a class="blog-card" href="https://medium.com/@mukundmurali/inbound-nat-with-palo-alto-in-oci-e098790c7321" target="_blank" data-source="medium">
+      <div class="blog-card-meta">
+        <span class="blog-source source-medium">Medium</span>
+        <span class="blog-date">Jan 2024</span>
+      </div>
+      <div class="blog-title">Inbound NAT with Palo Alto in OCI</div>
+      <div class="blog-excerpt">How to configure inbound NAT for private OCI resources using Palo Alto as an NVA — a common enterprise firewall pattern.</div>
+      <div class="blog-tags"><span class="blog-tag">Networking</span><span class="blog-tag">OCI</span><span class="blog-tag">Palo Alto</span></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<div class="divider"></div>
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Career Timeline</h2>
+  <p class="section-subtitle">From network engineer to cloud architect to AI builder.</p>
+
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jan 2022 — Present</div>
+      <div class="timeline-role">Principal Cloud Architect</div>
+      <div class="timeline-company"><strong>Oracle</strong> · Bengaluru, India</div>
+      <ul class="timeline-points">
+        <li>Built <strong>Diagrams to Deployment (D2D)</strong> — a vision LLM tool that generates Terraform from architecture diagrams. Won Oracle Innovation Month Award.</li>
+        <li>Built OCI GenAI Chatbot for enterprise document search using RAG + vector embeddings + LangChain.</li>
+        <li>Led Fortune 500 migration planning, workshops, and AI-driven automation for cloud deployments.</li>
+        <li>Delivered FSDR automation tools and cloud security integrations (Cloud Guard → Splunk).</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Feb 2021 — Jan 2022</div>
+      <div class="timeline-role">Azure Customer Engineer</div>
+      <div class="timeline-company"><strong>Microsoft</strong> · Bengaluru, India</div>
+      <ul class="timeline-points">
+        <li>Delivered cloud migration plans for Azure enterprise clients across ExpressRoute, VNets, VPNs, and Load Balancers.</li>
+        <li>Managed escalations and ran training sessions for enterprise clients globally.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jul 2018 — Jan 2021</div>
+      <div class="timeline-role">Azure Network Support Engineer (L3)</div>
+      <div class="timeline-company"><strong>Microsoft</strong> · Bengaluru, India</div>
+      <ul class="timeline-points">
+        <li>Provided global L3 support for Azure networking; contributed to Microsoft's global WAN design.</li>
+        <li>Received <strong>ACE and Trail Blazer awards</strong> for technical excellence and customer advocacy.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jun 2013 — Jul 2018</div>
+      <div class="timeline-role">Senior Network Engineer</div>
+      <div class="timeline-company"><strong>HCL Technologies</strong> · Bengaluru, India</div>
+      <ul class="timeline-points">
+        <li>Managed enterprise networks, VPNs, and firewalls — including Palo Alto, Cisco ASA, Nexus.</li>
+        <li>Supported Avago-LSI/Broadcom and SolarWinds integrations.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICATIONS ═══ -->
+<div class="divider"></div>
+<section id="certifications">
+  <div class="section-label">Certifications</div>
+  <h2 class="section-title">Credentials</h2>
+  <p class="section-subtitle">Verified expertise across Oracle Cloud and Microsoft Azure.</p>
+
+  <div class="certs-grid reveal">
+    <div class="cert-card">
+      <div class="cert-icon">☁️</div>
+      <div>
+        <div class="cert-name">OCI Architect Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name">OCI 2024 Generative AI Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔬</div>
+      <div>
+        <div class="cert-name">OCI 2024 Data Science Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">💻</div>
+      <div>
+        <div class="cert-name">OCI 2024 Developer Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚙️</div>
+      <div>
+        <div class="cert-name">OCI 2024 DevOps Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🌐</div>
+      <div>
+        <div class="cert-name">OCI 2024 Networking Professional</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🏗️</div>
+      <div>
+        <div class="cert-name">Azure Solutions Architect Expert</div>
+        <div class="cert-org">Microsoft (AZ-304 / AZ-303)</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🛡️</div>
+      <div>
+        <div class="cert-name">OCI Security Associate</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🌱</div>
+      <div>
+        <div class="cert-name">OCI AI Foundations Associate</div>
+        <div class="cert-org">Oracle Cloud Infrastructure</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🗄️</div>
+      <div>
+        <div class="cert-name">Oracle Autonomous DB Cloud Professional</div>
+        <div class="cert-org">Oracle (2022)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<div class="divider"></div>
+<section id="contact" style="padding-bottom: clamp(4rem,8vw,6rem);">
+  <div class="contact-wrapper reveal">
+    <div class="section-label" style="justify-content:center;">Contact</div>
+    <h2 class="section-title">Let's Build Something Together</h2>
+    <p style="color:var(--muted);max-width:480px;margin:0 auto 0.5rem;">
+      I'm actively exploring AI Product Manager roles and advisory opportunities.
+      If you're building AI products at scale — let's talk.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:mukund2345@gmail.com">
+        <span>✉️</span> mukund2345@gmail.com
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/mukundmurali-mm" target="_blank" rel="noopener">
+        <span>💼</span> LinkedIn
+      </a>
+      <a class="contact-link" href="https://github.com/mukundmurali-mm" target="_blank" rel="noopener">
+        <span>🐙</span> GitHub
+      </a>
+      <a class="contact-link" href="https://mukundmurali.hashnode.dev" target="_blank" rel="noopener">
+        <span>📝</span> Hashnode
+      </a>
+      <a class="contact-link" href="https://medium.com/@mukundmurali" target="_blank" rel="noopener">
+        <span>📖</span> Medium
+      </a>
+      <a class="contact-link" href="https://mukundmurali.in/" target="_blank" rel="noopener">
+        <span>🌐</span> Website
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>Built by Mukund Murali · Bengaluru, India · <a href="mailto:mukund2345@gmail.com">mukund2345@gmail.com</a></p>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scrollTop" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  /* ── Theme Toggle ── */
+  const html = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('theme') || 'dark';
+  html.setAttribute('data-theme', saved);
+  toggle.textContent = saved === 'dark' ? '☀️' : '🌙';
+
+  toggle.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    toggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('theme', next);
+  });
+
+  /* ── Blog Filter Tabs ── */
+  const tabs = document.querySelectorAll('.blog-tab');
+  const blogCards = document.querySelectorAll('.blog-card');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.dataset.filter;
+      blogCards.forEach(card => {
+        if (filter === 'all' || card.dataset.source === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  /* ── Scroll Reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── Scroll to Top Button ── */
+  const scrollBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  /* ── Active nav link on scroll ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--text)'
+            : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>
