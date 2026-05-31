@@ -2,8 +2,6 @@
 
 I am a passionate tech enthusiast, driven by a curiosity for technology and a love for writing. My journey involves delving into the world of computer science, exploring new ideas, and sharing my insights with the community.
 
-![mukundmurali-mm's Stats](https://github-readme-stats.vercel.app/api?username=mukundmurali-mm&theme=vue-dark&show_icons=true&hide_border=true&count_private=true)
-
 ## Professional Summary
 
 Award-winning Cloud Infrastructure Architect and AI Innovator with 10+ years of experience across Oracle and Microsoft. Specialized in designing and automating cloud-native architectures, integrating Generative AI into enterprise workflows, and leading large-scale migrations on OCI and Azure. Proven expertise in LLMOps, vector databases, infrastructure automation, and secure cloud deployments. Recognized for innovation in transforming diagrams into deployment-ready infrastructure using AI, and for driving cross-functional collaborations that deliver real business value.
@@ -11,7 +9,7 @@ Award-winning Cloud Infrastructure Architect and AI Innovator with 10+ years of 
 ## Contact Information
 
 - 📍 Bengaluru, India
-- ✉️ mukund2345@gmail.com
+- ✉️ mukund.m.murali@gmail.com
 - 📞 +91-7338451629
 - 🔗 LinkedIn: https://linkedin.com/in/mukundmurali-mm
 - 📝 Medium: https://medium.com/@mukundmurali
