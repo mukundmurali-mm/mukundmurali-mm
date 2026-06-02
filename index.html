@@ -682,10 +682,10 @@
       border-radius: 999px;
     }
 
-    .source-hashnode {
-      background: rgba(46,110,190,0.15);
-      color: #2e6ebe;
-      border: 1px solid rgba(46,110,190,0.25);
+    .source-blog {
+      background: rgba(124,58,237,0.12);
+      color: #9b6dff;
+      border: 1px solid rgba(124,58,237,0.25);
     }
 
     .source-medium {
@@ -1346,6 +1346,7 @@
 
   <div class="blog-tabs">
     <button class="blog-tab active" data-filter="all">All Posts</button>
+    <button class="blog-tab" data-filter="blog">My Blog</button>
     <button class="blog-tab" data-filter="medium">Medium</button>
   </div>
 
@@ -1612,23 +1613,82 @@
   });
 
   /* ── Blog Filter Tabs ── */
-  const tabs = document.querySelectorAll('.blog-tab');
-  const blogCards = document.querySelectorAll('.blog-card');
+  function applyBlogFilter(filter) {
+    document.querySelectorAll('.blog-card').forEach(card => {
+      const show = filter === 'all' || card.dataset.source === filter;
+      card.classList.toggle('hidden', !show);
+    });
+  }
 
-  tabs.forEach(tab => {
+  document.querySelectorAll('.blog-tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      const filter = tab.dataset.filter;
-      blogCards.forEach(card => {
-        if (filter === 'all' || card.dataset.source === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
+      applyBlogFilter(tab.dataset.filter);
     });
   });
+
+  /* ── Dynamic Blog Posts (blogs.mukundmurali.in via Hashnode API) ── */
+  async function loadPersonalBlogPosts() {
+    const BLOG_HOST = 'blogs.mukundmurali.in';
+    const query = `{
+      publication(host: "${BLOG_HOST}") {
+        posts(first: 20) {
+          edges {
+            node {
+              title
+              slug
+              publishedAt
+              brief
+              tags { name }
+            }
+          }
+        }
+      }
+    }`;
+
+    try {
+      const res = await fetch('https://gql.hashnode.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+      const { data } = await res.json();
+      const edges = data?.publication?.posts?.edges;
+      if (!edges?.length) return;
+
+      const grid = document.getElementById('blogGrid');
+      const activeFilter = document.querySelector('.blog-tab.active')?.dataset.filter || 'all';
+
+      edges.forEach(({ node }) => {
+        const date = new Date(node.publishedAt);
+        const formatted = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        const tags = (node.tags || []).slice(0, 3).map(t => `<span class="blog-tag">${t.name}</span>`).join('');
+        const hidden = activeFilter !== 'all' && activeFilter !== 'blog' ? ' hidden' : '';
+
+        const card = document.createElement('a');
+        card.className = `blog-card${hidden}`;
+        card.href = `https://${BLOG_HOST}/${node.slug}`;
+        card.target = '_blank';
+        card.rel = 'noopener';
+        card.dataset.source = 'blog';
+        card.innerHTML = `
+          <div class="blog-card-meta">
+            <span class="blog-source source-blog">My Blog</span>
+            <span class="blog-date">${formatted}</span>
+          </div>
+          <div class="blog-title">${node.title}</div>
+          <div class="blog-excerpt">${node.brief || ''}</div>
+          <div class="blog-tags">${tags}</div>`;
+
+        grid.insertBefore(card, grid.firstChild);
+      });
+    } catch (e) {
+      console.warn('Could not load personal blog posts:', e);
+    }
+  }
+
+  loadPersonalBlogPosts();
 
   /* ── Scroll Reveal ── */
   const observer = new IntersectionObserver((entries) => {
