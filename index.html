@@ -1339,70 +1339,9 @@
 <section id="blog">
   <div class="section-label">Blog</div>
   <h2 class="section-title">Writing &amp; Insights</h2>
-  <p class="section-subtitle">AI, cloud, productivity, and the future of engineering — on my blog &amp; Medium.</p>
-  <div style="margin-bottom:1.5rem;">
+  <p class="section-subtitle">AI, cloud, productivity, and the future of engineering.</p>
+  <div>
     <a href="https://blogs.mukundmurali.in" target="_blank" rel="noopener" class="btn-primary" style="font-size:0.85rem;padding:0.55rem 1.4rem;">Visit My Blog ↗</a>
-  </div>
-
-  <div class="blog-tabs">
-    <button class="blog-tab active" data-filter="all">All Posts</button>
-    <button class="blog-tab" data-filter="blog">My Blog</button>
-    <button class="blog-tab" data-filter="medium">Medium</button>
-  </div>
-
-  <div class="blog-grid reveal" id="blogGrid">
-
-    <!-- ─ Medium ─ -->
-    <a class="blog-card" href="https://medium.com/@mukundmurali/top-5-mac-apps-that-supercharge-my-productivity-in-2025-f41cb2c441cd" target="_blank" data-source="medium">
-      <div class="blog-card-meta">
-        <span class="blog-source source-medium">Medium</span>
-        <span class="blog-date">May 2025</span>
-      </div>
-      <div class="blog-title">Top 5 Mac Apps That Supercharge My Productivity in 2025</div>
-      <div class="blog-excerpt">The exact tools I use every day to stay in flow — from task management to AI-assisted writing and focus systems.</div>
-      <div class="blog-tags"><span class="blog-tag">Productivity</span><span class="blog-tag">Mac</span><span class="blog-tag">Tools</span></div>
-    </a>
-
-    <a class="blog-card" href="https://medium.com/@mukundmurali/forever-notes-your-simple-and-effective-pkm-in-apple-notes-b5efa5ffd390" target="_blank" data-source="medium">
-      <div class="blog-card-meta">
-        <span class="blog-source source-medium">Medium</span>
-        <span class="blog-date">Apr 2025</span>
-      </div>
-      <div class="blog-title">Forever Notes: Your Simple &amp; Effective PKM in Apple Notes</div>
-      <div class="blog-excerpt">A simple, friction-free personal knowledge management system built entirely inside Apple Notes — no plugins, no subscriptions.</div>
-      <div class="blog-tags"><span class="blog-tag">PKM</span><span class="blog-tag">Apple Notes</span><span class="blog-tag">Productivity</span></div>
-    </a>
-
-    <a class="blog-card" href="https://medium.com/@mukundmurali/run-llama-3-2-vision-model-in-oci-data-science-notebook-67c03e821cb2" target="_blank" data-source="medium">
-      <div class="blog-card-meta">
-        <span class="blog-source source-medium">Medium</span>
-        <span class="blog-date">Sep 2024</span>
-      </div>
-      <div class="blog-title">Run Llama 3.2 Vision Model in OCI Data Science Notebook</div>
-      <div class="blog-excerpt">Step-by-step guide to running Meta's Llama 3.2 vision model inside an OCI Data Science Notebook environment.</div>
-      <div class="blog-tags"><span class="blog-tag">Llama</span><span class="blog-tag">OCI</span><span class="blog-tag">Vision AI</span></div>
-    </a>
-
-    <a class="blog-card" href="https://medium.com/@mukundmurali/managing-oci-fsdr-plan-steps-with-excel-spreadsheet-ecbe4c8b2e17" target="_blank" data-source="medium">
-      <div class="blog-card-meta">
-        <span class="blog-source source-medium">Medium</span>
-        <span class="blog-date">Aug 2024</span>
-      </div>
-      <div class="blog-title">Managing OCI FSDR Plan Steps with Excel Spreadsheet</div>
-      <div class="blog-excerpt">A practical approach to managing OCI Full Stack Disaster Recovery plan steps using a familiar Excel interface.</div>
-      <div class="blog-tags"><span class="blog-tag">OCI</span><span class="blog-tag">FSDR</span><span class="blog-tag">Disaster Recovery</span></div>
-    </a>
-
-    <a class="blog-card" href="https://medium.com/@mukundmurali/inbound-nat-with-palo-alto-in-oci-e098790c7321" target="_blank" data-source="medium">
-      <div class="blog-card-meta">
-        <span class="blog-source source-medium">Medium</span>
-        <span class="blog-date">Jan 2024</span>
-      </div>
-      <div class="blog-title">Inbound NAT with Palo Alto in OCI</div>
-      <div class="blog-excerpt">How to configure inbound NAT for private OCI resources using Palo Alto as an NVA — a common enterprise firewall pattern.</div>
-      <div class="blog-tags"><span class="blog-tag">Networking</span><span class="blog-tag">OCI</span><span class="blog-tag">Palo Alto</span></div>
-    </a>
-
   </div>
 </section>
 
@@ -1612,83 +1551,6 @@
     localStorage.setItem('theme', next);
   });
 
-  /* ── Blog Filter Tabs ── */
-  function applyBlogFilter(filter) {
-    document.querySelectorAll('.blog-card').forEach(card => {
-      const show = filter === 'all' || card.dataset.source === filter;
-      card.classList.toggle('hidden', !show);
-    });
-  }
-
-  document.querySelectorAll('.blog-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      applyBlogFilter(tab.dataset.filter);
-    });
-  });
-
-  /* ── Dynamic Blog Posts (blogs.mukundmurali.in via Hashnode API) ── */
-  async function loadPersonalBlogPosts() {
-    const BLOG_HOST = 'blogs.mukundmurali.in';
-    const query = `{
-      publication(host: "${BLOG_HOST}") {
-        posts(first: 20) {
-          edges {
-            node {
-              title
-              slug
-              publishedAt
-              brief
-              tags { name }
-            }
-          }
-        }
-      }
-    }`;
-
-    try {
-      const res = await fetch('https://gql.hashnode.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-      });
-      const { data } = await res.json();
-      const edges = data?.publication?.posts?.edges;
-      if (!edges?.length) return;
-
-      const grid = document.getElementById('blogGrid');
-      const activeFilter = document.querySelector('.blog-tab.active')?.dataset.filter || 'all';
-
-      edges.forEach(({ node }) => {
-        const date = new Date(node.publishedAt);
-        const formatted = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-        const tags = (node.tags || []).slice(0, 3).map(t => `<span class="blog-tag">${t.name}</span>`).join('');
-        const hidden = activeFilter !== 'all' && activeFilter !== 'blog' ? ' hidden' : '';
-
-        const card = document.createElement('a');
-        card.className = `blog-card${hidden}`;
-        card.href = `https://${BLOG_HOST}/${node.slug}`;
-        card.target = '_blank';
-        card.rel = 'noopener';
-        card.dataset.source = 'blog';
-        card.innerHTML = `
-          <div class="blog-card-meta">
-            <span class="blog-source source-blog">My Blog</span>
-            <span class="blog-date">${formatted}</span>
-          </div>
-          <div class="blog-title">${node.title}</div>
-          <div class="blog-excerpt">${node.brief || ''}</div>
-          <div class="blog-tags">${tags}</div>`;
-
-        grid.insertBefore(card, grid.firstChild);
-      });
-    } catch (e) {
-      console.warn('Could not load personal blog posts:', e);
-    }
-  }
-
-  loadPersonalBlogPosts();
 
   /* ── Scroll Reveal ── */
   const observer = new IntersectionObserver((entries) => {
